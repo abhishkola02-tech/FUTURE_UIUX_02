@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SmileCare — Easy Dental Appointments | Mobile UI/UX Prototype</title>
+  <meta name="description" content="Production-grade mobile dental appointment booking app prototype. Seamless discovery, specialist selection, scheduling, and appointment management.">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- App Wrapper / Phone Shell Container -->
+  <div class="device-viewport">
+    
+    <!-- Floating Quick Control & Case Study Switcher (Desktop Preview Aid) -->
+    <header class="top-preview-bar">
+      <div class="preview-brand">
+        <span class="pulse-dot"></span>
+        <strong>SmileCare</strong> &nbsp;|&nbsp; <span>Task 2 (2026) Interactive Mobile Experience</span>
+      </div>
+      <div class="preview-actions">
+        <button class="preview-pill-btn" onclick="toggleDeviceFrame()">
+          <i data-lucide="smartphone"></i> <span id="frameToggleText">Toggle Frame</span>
+        </button>
+        <button class="preview-pill-btn" onclick="toggleCaseStudyModal()">
+          <i data-lucide="book-open"></i> <span>UX Case Study & Spec</span>
+        </button>
+        <button class="preview-pill-btn reset-btn" onclick="resetPrototype()">
+          <i data-lucide="rotate-ccw"></i> <span>Reset App</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Mobile Canvas Container -->
+    <main class="mobile-device-frame" id="mobileDevice">
+      
+      <!-- Mobile Hardware Details: Dynamic Island / Speaker & Status Bar -->
+      <div class="device-notch-area">
+        <div class="status-time" id="liveTime">09:41</div>
+        <div class="dynamic-island">
+          <div class="island-camera"></div>
+          <div class="island-sensor"></div>
+        </div>
+        <div class="status-icons">
+          <i data-lucide="signal" class="status-icon"></i>
+          <i data-lucide="wifi" class="status-icon"></i>
+          <i data-lucide="battery" class="status-icon"></i>
+        </div>
+      </div>
+
+      <!-- Live Toast Container -->
+      <div id="toastContainer" class="toast-container" role="alert" aria-live="assertive"></div>
+
+      <!-- Application Screens Container -->
+      <div class="app-screen-container" id="appScreens">
+
+        <!-- ============================================== -->
+        <!-- SCREEN 1: SPLASH SCREEN                         -->
+        <!-- ============================================== -->
+        <section id="screen-splash" class="screen active splash-screen">
+          <div class="splash-content">
+            <div class="splash-logo-wrapper">
+              <div class="splash-logo-glow"></div>
+              <div class="splash-icon-circle">
+                <i data-lucide="sparkles" class="splash-sparkle"></i>
+                <svg class="smile-logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Tooth Shape with Modern Smile Accent -->
+                  <path d="M50 15 C33 15, 20 28, 22 45 C23 58, 30 75, 38 88 C43 95, 47 90, 48 83 L50 72 L52 83 C53 90, 57 95, 62 88 C70 75, 77 58, 78 45 C80 28, 67 15, 50 15 Z" fill="url(#toothGrad)" />
+                  <path d="M34 50 Q50 64 66 50" stroke="#00C9A7" stroke-width="6" stroke-linecap="round" fill="none"/>
+                  <defs>
+                    <linearGradient id="toothGrad" x1="20" y1="15" x2="80" y2="88" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#FFFFFF"/>
+                      <stop offset="1" stop-color="#E2F1F8"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+            </div>
+            <h1 class="splash-title">SmileCare</h1>
+            <p class="splash-subtitle">Easy Dental Appointments</p>
+            
+            <div class="splash-clinic-badge">
+              <i data-lucide="map-pin" class="badge-icon"></i>
+              <span>SmileCare Premier Dental Clinic • Indiranagar</span>
+            </div>
+
+            <div class="splash-loader">
+              <div class="splash-loader-bar"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SCREEN 2: ONBOARDING CAROUSEL                  -->
+        <!-- ============================================== -->
+        <section id="screen-onboarding" class="screen onboarding-screen">
+          <div class="onboarding-top-bar">
+            <div class="clinic-mini-pill">
+              <span class="clinic-dot"></span> SmileCare
+            </div>
+            <button class="skip-btn" onclick="navigateTo('screen-login')" id="btnSkipOnboarding">Skip</button>
+          </div>
+
+          <div class="onboarding-slider" id="onboardingSlider">
+            <!-- Slide 1 -->
+            <div class="onboarding-slide active" data-slide="0">
+              <div class="onboarding-illustration">
+                <div class="illus-blob blob-1"></div>
+                <div class="illus-card main-ill">
+                  <div class="ill-icon-box bg-blue">
+                    <i data-lucide="calendar-check" class="ill-icon"></i>
+                  </div>
+                  <div class="ill-badge-float">
+                    <i data-lucide="check" class="check-sm"></i> Instant Booking
+                  </div>
+                </div>
+              </div>
+              <div class="slide-copy">
+                <h2>Book Your Appointment Easily</h2>
+                <p>Find the right dental service and book a convenient appointment in just a few simple steps.</p>
+              </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="onboarding-slide" data-slide="1">
+              <div class="onboarding-illustration">
+                <div class="illus-blob blob-2"></div>
+                <div class="illus-card main-ill">
+                  <div class="ill-icon-box bg-teal">
+                    <i data-lucide="clock" class="ill-icon"></i>
+                  </div>
+                  <div class="ill-time-chip-float">
+                    <span class="chip-dot"></span> 10:30 AM Available
+                  </div>
+                </div>
+              </div>
+              <div class="slide-copy">
+                <h2>Choose a Time That Works for You</h2>
+                <p>View real-time available dates and time slots with certified specialists that fit your personal schedule.</p>
+              </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="onboarding-slide" data-slide="2">
+              <div class="onboarding-illustration">
+                <div class="illus-blob blob-3"></div>
+                <div class="illus-card main-ill">
+                  <div class="ill-icon-box bg-accent">
+                    <i data-lucide="bell-ring" class="ill-icon"></i>
+                  </div>
+                  <div class="ill-notify-float">
+                    <i data-lucide="shield-check" class="check-sm"></i> Zero Waiting Time
+                  </div>
+                </div>
+              </div>
+              <div class="slide-copy">
+                <h2>Stay on Top of Your Visits</h2>
+                <p>Manage your visits effortlessly, reschedule with ease, and receive automated reminders so you never miss care.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="onboarding-footer">
+            <div class="dots-indicator" id="onboardingDots">
+              <span class="dot active" onclick="goToSlide(0)"></span>
+              <span class="dot" onclick="goToSlide(1)"></span>
+              <span class="dot" onclick="goToSlide(2)"></span>
+            </div>
+            <button class="btn btn-primary btn-block btn-lg" id="btnOnboardingNext" onclick="nextOnboardingSlide()">
+              <span>Next</span>
+              <i data-lucide="arrow-right"></i>
+            </button>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SCREEN 3: LOGIN                                 -->
+        <!-- ============================================== -->
+        <section id="screen-login" class="screen auth-screen">
+          <div class="auth-header">
+            <div class="auth-brand-badge">
+              <div class="sm-logo-icon"><i data-lucide="smile"></i></div>
+              <span>SmileCare Clinic</span>
+            </div>
+            <h1 class="auth-title">Welcome Back</h1>
+            <p class="auth-subtitle">Sign in to manage your appointments & oral health history</p>
+          </div>
+
+          <form id="loginForm" class="auth-form" onsubmit="handleLogin(event)">
+            <div class="form-group">
+              <label for="loginEmail" class="form-label">Email or Phone Number</label>
+              <div class="input-wrapper">
+                <i data-lucide="mail" class="input-icon"></i>
+                <input type="text" id="loginEmail" class="form-input" placeholder="e.g. rahul.sharma@example.com" value="priya.sharma@gmail.com" required>
+              </div>
+              <span class="input-error" id="loginEmailError"></span>
+            </div>
+
+            <div class="form-group">
+              <div class="label-row">
+                <label for="loginPassword" class="form-label">Password</label>
+                <a href="javascript:void(0)" class="link-text-sm" onclick="showToast('Password reset link sent to registered email', 'info')">Forgot Password?</a>
+              </div>
+              <div class="input-wrapper">
+                <i data-lucide="lock" class="input-icon"></i>
+                <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password" value="DemoPass2026!" required>
+                <button type="button" class="btn-input-action" onclick="togglePasswordVisibility('loginPassword', this)">
+                  <i data-lucide="eye" class="toggle-eye"></i>
+                </button>
+              </div>
+              <span class="input-error" id="loginPasswordError"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg" id="btnSignIn">
+              <span>Sign In</span>
+              <i data-lucide="log-in"></i>
+            </button>
+
+            <div class="auth-divider">
+              <span>or continue with</span>
+            </div>
+
+            <button type="button" class="btn btn-secondary btn-block btn-social" onclick="handleSocialAuth('Google')">
+              <svg width="18" height="18" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+              <span>Continue with Google</span>
+            </button>
+          </form>
+
+          <div class="auth-footer">
+            <p>Don't have an account? <button type="button" class="link-btn-bold" onclick="navigateTo('screen-register')">Create Account</button></p>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SCREEN 4: REGISTER                              -->
+        <!-- ============================================== -->
+        <section id="screen-register" class="screen auth-screen">
+          <div class="auth-header">
+            <button class="back-btn-circle" onclick="navigateTo('screen-login')" aria-label="Go Back">
+              <i data-lucide="chevron-left"></i>
+            </button>
+            <h1 class="auth-title">Create Your Account</h1>
+            <p class="auth-subtitle">Join SmileCare for effortless dental care booking</p>
+          </div>
+
+          <form id="registerForm" class="auth-form" onsubmit="handleRegister(event)">
+            <div class="form-group">
+              <label for="regFullName" class="form-label">Full Name</label>
+              <div class="input-wrapper">
+                <i data-lucide="user" class="input-icon"></i>
+                <input type="text" id="regFullName" class="form-input" placeholder="e.g. Priya Sharma" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="regPhone" class="form-label">Phone Number</label>
+              <div class="input-wrapper">
+                <i data-lucide="phone" class="input-icon"></i>
+                <input type="tel" id="regPhone" class="form-input" placeholder="+91 98765 43210" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="regEmail" class="form-label">Email Address</label>
+              <div class="input-wrapper">
+                <i data-lucide="mail" class="input-icon"></i>
+                <input type="email" id="regEmail" class="form-input" placeholder="priya.sharma@example.com" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="regPassword" class="form-label">Password</label>
+              <div class="input-wrapper">
+                <i data-lucide="lock" class="input-icon"></i>
+                <input type="password" id="regPassword" class="form-input" placeholder="Min. 8 characters" required>
+                <button type="button" class="btn-input-action" onclick="togglePasswordVisibility('regPassword', this)">
+                  <i data-lucide="eye" class="toggle-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="regConfirmPassword" class="form-label">Confirm Password</label>
+              <div class="input-wrapper">
+                <i data-lucide="shield-check" class="input-icon"></i>
+                <input type="password" id="regConfirmPassword" class="form-input" placeholder="Re-type password" required>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg" id="btnRegister">
+              <span>Create Account</span>
+              <i data-lucide="user-plus"></i>
+            </button>
+          </form>
+
+          <div class="auth-footer">
+            <p>Already have an account? <button type="button" class="link-btn-bold" onclick="navigateTo('screen-login')">Sign In</button></p>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SCREEN 5: HOME DASHBOARD                        -->
+        <!-- ============================================== -->
+        <section id="screen-home" class="screen home-screen">
+          <!-- Home Header -->
+          <div class="home-top-header">
+            <div class="user-greeting-box">
+              <div class="avatar-wrapper" onclick="navigateTo('screen-profile')">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" alt="Priya Sharma" class="user-avatar-img">
+                <span class="online-indicator"></span>
+              </div>
+              <div class="greeting-text">
+                <span class="greeting-sub">Welcome back</span>
+                <h1 class="greeting-name">Hi, Priya 👋</h1>
+              </div>
+            </div>
+            <button class="notif-btn-bubble" onclick="navigateTo('screen-notifications')" aria-label="Notifications">
+              <i data-lucide="bell"></i>
+              <span class="unread-badge" id="unreadBadgeCount">2</span>
+            </button>
+          </div>
+
+          <div class="home-scroll-body">
+            <!-- Clinic Verification Banner -->
+            <div class="clinic-location-chip" onclick="showClinicModal()">
+              <div class="chip-pin"><i data-lucide="map-pin"></i></div>
+              <div class="chip-info">
+                <strong>SmileCare Dental Clinic</strong>
+                <span>100ft Road, Indiranagar, Bengaluru • Open till 8 PM</span>
+              </div>
+              <i data-lucide="chevron-right" class="chip-arrow"></i>
+            </div>
+
+            <!-- Big Booking Hero Card -->
+            <div class="hero-booking-card">
+              <div class="hero-bg-pattern"></div>
+              <div class="hero-content">
+                <span class="hero-tag"><i data-lucide="sparkles"></i> Instant 2-Min Booking</span>
+                <h2>What would you like to book today?</h2>
+                <p>Top rated dental surgeons, transparent pricing & zero queue time.</p>
+                <button class="btn btn-hero-cta" onclick="startBookingFlow('cleaning')">
+                  <span>Book an Appointment</span>
+                  <i data-lucide="calendar-plus"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Upcoming Appointment Section -->
+            <div class="home-section-header">
+              <div class="section-title-wrap">
+                <i data-lucide="calendar" class="sec-icon sec-blue"></i>
+                <h2>Upcoming Appointment</h2>
+              </div>
+              <button class="view-all-link" onclick="navigateTo('screen-appointments')">View All</button>
+            </div>
+
+            <div id="homeUpcomingCard" class="appointment-card featured-upcoming">
+              <div class="card-status-row">
+                <span class="status-pill status-confirmed">
+                  <i data-lucide="check-circle-2"></i> Confirmed
+                </span>
+                <span class="appt-id-pill">#SC-8492</span>
+              </div>
+
+              <div class="card-main-info">
+                <div class="service-icon-box bg-cleaning">
+                  <i data-lucide="sparkles"></i>
+                </div>
+                <div class="appt-title-block">
+                  <h3 id="homeApptService">Dental Cleaning & Polishing</h3>
+                  <p class="doctor-name" id="homeApptDoctor"><i data-lucide="stethoscope"></i> Dr. Ananya Rao (Senior Dentist)</p>
+                </div>
+              </div>
+
+              <div class="card-meta-bar">
+                <div class="meta-item">
+                  <i data-lucide="calendar"></i>
+                  <span id="homeApptDate">15 Oct 2026</span>
+                </div>
+                <div class="meta-divider"></div>
+                <div class="meta-item">
+                  <i data-lucide="clock"></i>
+                  <span id="homeApptTime">10:30 AM</span>
+                </div>
+              </div>
+
+              <div class="card-actions-row">
+                <button class="btn btn-outline-sm flex-1" onclick="openAppointmentDetails('SC-8492')">
+                  <i data-lucide="eye"></i> View Details
+                </button>
+                <button class="btn btn-secondary-sm" onclick="startReschedule('SC-8492')">
+                  <i data-lucide="clock-rewind"></i> Reschedule
+                </button>
+              </div>
+            </div>
+
+            <!-- Popular Services Section -->
+            <div class="home-section-header mt-lg">
+              <div class="section-title-wrap">
+                <i data-lucide="layout-grid" class="sec-icon sec-teal"></i>
+                <h2>Popular Services</h2>
+              </div>
+              <button class="view-all-link" onclick="navigateTo('screen-service')">Explore All</button>
+            </div>
+
+            <!-- Quick Service Cards Grid -->
+            <div class="services-quick-grid">
+              <div class="quick-service-card" onclick="selectServiceAndProceed('cleaning')">
+                <div class="q-icon bg-cleaning"><i data-lucide="sparkles"></i></div>
+                <h4>Dental Cleaning</h4>
+                <p>30–45 min • ₹1,200</p>
+                <span class="q-badge">Most Popular</span>
+              </div>
+
+              <div class="quick-service-card" onclick="selectServiceAndProceed('checkup')">
+                <div class="q-icon bg-checkup"><i data-lucide="stethoscope"></i></div>
+                <h4>General Checkup</h4>
+                <p>30 min • ₹500</p>
+                <span class="q-badge">Routine</span>
+              </div>
+
+              <div class="quick-service-card" onclick="selectServiceAndProceed('whitening')">
+                <div class="q-icon bg-whitening"><i data-lucide="sun"></i></div>
+                <h4>Teeth Whitening</h4>
+                <p>60 min • ₹4,500</p>
+                <span class="q-badge">Cosmetic</span>
+              </div>
+
+              <div class="quick-service-card" onclick="selectServiceAndProceed('orthodontics')">
+                <div class="q-icon bg-ortho"><i data-lucide="smile"></i></div>
+                <h4>Orthodontics</h4>
+                <p>30 min • ₹1,000</p>
+                <span class="q-badge">Braces/Aligners</span>
+              </div>
+
+              <div class="quick-service-card" onclick="selectServiceAndProceed('crown')">
+                <div class="q-icon bg-crown"><i data-lucide="shield"></i></div>
+                <h4>Dental Crown</h4>
+                <p>60–90 min • ₹6,000</p>
+                <span class="q-badge">Restoration</span>
+              </div>
+
+              <div class="quick-service-card urgent-card" onclick="selectServiceAndProceed('emergency')">
+                <div class="q-icon bg-emergency"><i data-lucide="zap"></i></div>
+                <h4>Emergency Care</h4>
+                <p>Immediate • On Call</p>
+                <span class="q-badge badge-urgent">Priority</span>
+              </div>
+            </div>
+
+            <!-- Trust & Safety Banner -->
+            <div class="trust-banner">
+              <div class="trust-stat">
+                <strong>4.9 ★</strong>
+                <span>1,200+ Patient Reviews</span>
+              </div>
+              <div class="trust-divider"></div>
+              <div class="trust-stat">
+                <strong>100%</strong>
+                <span>Sterilized Operatories</span>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SCREEN 6: SERVICE SELECTION                     -->
+        <!-- ============================================== -->
+        <section id="screen-service" class="screen booking-flow-screen">
+          <div class="screen-sticky-header">
+            <button class="back-btn-circle" onclick="navigateTo('screen-home')" aria-label="Go Back">
+              <i data-lucide="chevron-left"></i>
+            </button>
+            <div class="header-flow-progress">
+              <span class="step-indicator">Step 1 of 4</span>
+              <h1 class="screen-title">What service do you need?</h1>
+            </div>
+            <div class="step-dots-mini">
+              <span class="step-dot active"></span>
+              <span class="step-dot"></span>
+              <span class="step-dot"></span>
+              <span class="step-dot"></span>
+            </div>
+          </div>
+
+          <div class="flow-scroll-body">
+            <p class="flow-instruction">Select a treatment or consultation to view available specialists.</p>
+            
+            <div class="services-list" id="servicesList">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <div class="flow-sticky-footer">
+            <div class="footer-summary-row" id="serviceFooterSummary">
+              <span>Selected: <strong id="selectedServiceName">None</strong></span>
+              <span class="price-highlight" id="selectedServicePrice">--</span>
+            </div>
+            <button class="btn btn-primary btn-block btn-lg" id="btnServiceContinue" onclick="proceedToDentistStep()" disabled>
+              <span>Continue to Specialists</span>
+              <i data-lucide="arrow-right"></i>
+            </button>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SCREEN 7: DENTIST / SPECIALIST SELECTION        -->
+        <!-- ============================================== -->
+        <section id="screen-dentist" class="screen booking-flow-screen">
+          <div class="screen-sticky-header">
+            <button class="back-btn-circle" onclick="navigateTo('screen-service')" aria-label="Go Back">
+              <i data-lucide="chevron-left"></i>
+            </button>
+            <div class="header-flow-progress">
+              <span class="step-indicator">Step 2 of 4</span>
+              <h1 class="screen-title">Choose Your Dentist</h1>
+            </div>
+            <div class="step-dots-mini">
+              <span class="step-dot completed"></span>
+              <span class="step-dot active"></span>
+              <span class="step-dot"></span>
+              <span class="step-dot"></span>
+            </div>
+          </div>
+
+          <div class="flow-scroll-body">
+            <!-- Any Available Option -->
+            <div class="dentist-card any-dentist-card active-selection" id="dentist-any" onclick="selectDentist('any')">
+              <div class="dentist-avatar-box">
+                <div class="any-avatar-icon"><i data-lucide="users"></i></div>
+              </div>
+              <div class="dentist-details">
+                <div class="dentist-header-line">
+                  <h3>Any Available Specialist</h3>
+                  <span class="speed-pill"><i data-lucide="zap"></i> Fastest Slot</span>
+                </div>
+                <p class="dentist-spec">Assigns first verified specialist on duty</p>
+                <div class="dentist-meta-row">
+                  <span class="dentist-rating"><i data-lucide="star" class="star-fill"></i> 4.9 (All staff)</span>
+                  <span class="dentist-exp">• Minimum 6+ yrs exp</span>
+                </div>
+              </div>
+              <div class="select-radio-icon">
+                <div class="custom-radio checked"></div>
+              </div>
+            </div>
+
+            <div class="specialist-divider-label">
+              <span>Or Choose a Named Specialist</span>
+            </div>
+
+            <!-- Specialist Cards List -->
+            <div class="dentists-list" id="dentistsList">
+              <!-- Dynamic Cards Rendered in JS -->
+            </div>
+          </div>
+
+          <div class="flow-sticky-footer">
+            <div class="footer-summary-row">
+              <span>Dentist: <strong id="selectedDentistName">Any Available Specialist</strong></span>
+              <span class="availability-status"><i data-lucide="check-circle"></i> Available</span>
+            </div>
+            <button class="btn btn-primary btn-block btn-lg" id="btnDentistContinue" onclick="proceedToDateStep()">
+              <span>Continue to Select Date</span>
+              <i data-lucide="arrow-right"></i>
+            </button>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SCREEN 8: DATE SELECTION                        -->
+        <!-- ============================================== -->
+        <section id="screen-date" class="screen booking-flow-screen">
+          <div class="screen-sticky-header">
+            <button class="back-btn-circle" onclick="navigateTo('screen-dentist')" aria-label="Go Back">
+              <i data-lucide="chevron-left"></i>
+            </button>
+            <div class="header-flow-progress">
+              <span class="step-indicator">Step 3 of 4</span>
+              <h1 class="screen-title">Choose a Date</h1>
+            </div>
+            <div class="step-dots-mini">
+              <span class="step-dot completed"></span>
+              <span class="step-dot completed"></span>
+              <span class="step-dot active"></span>
+              <span class="step-dot"></span>
+            </div>
+          </div>
+
+          <div class="flow-scroll-body">
+            <!-- Month Header with navigation -->
+            <div class="calendar-month-bar">
+              <button class="month-nav-btn" onclick="changeMonth(-1)" id="btnPrevMonth"><i data-lucide="chevron-left"></i></button>
+              <h2 id="calendarMonthLabel">October 2026</h2>
+              <button class="month-nav-btn" onclick="changeMonth(1)" id="btnNextMonth"><i data-lucide="chevron-right"></i></button>
+            </div>
+
+            <!-- Horizontal Date Strip -->
+            <div class="horizontal-date-strip" id="dateStripContainer">
+              <!-- Rendered via JS -->
+            </div>
+
+            <!-- Full Mini Calendar for Easy Month Exploration -->
+            <div class="mini-calendar-box">
+              <div class="cal-days-header">
+                <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+              </div>
+              <div class="cal-grid" id="fullCalendarGrid">
+                <!-- Rendered in JS -->
+              </div>
+            </div>
+
+            <!-- Clinic Schedule Info Alert -->
+            <div class="clinic-timing-notice">
+              <i data-lucide="info"></i>
+              <div class="notice-text">
+                <strong>Clinic Hours:</strong> Mon–Sat: 09:00 AM – 08:00 PM | Sunday: 10:00 AM – 02:00 PM.
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-sticky-footer">
+            <div class="footer-summary-row">
+              <span>Date: <strong id="selectedDateDisplay">Thu, 15 Oct 2026</strong></span>
+              <span class="badge-status-green">Available</span>
+            </div>
+            <button class="btn btn-primary btn-block btn-lg" id="btnDateContinue" onclick="proceedToTimeStep()">
+              <span>Continue to Select Time</span>
+              <i data-lucide="arrow-right"></i>
+            </button>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SCREEN 9: TIME SLOT SELECTION                   -->
+        <!-- ============================================== -->
+        <section id="screen-time" class="screen booking-flow-screen">
+          <div class="screen-sticky-header">
+            <button class="back-btn-circle" onclick="navigateTo('screen-date')" aria-label="Go Back">
+              <i data-lucide="chevron-left"></i>
+            </button>
+            <div class="header-flow-progress">
+              <span class="step-indicator">Step 4 of 4</span>
+              <h1 class="screen-title">Choose a Time Slot</h1>
+            </div>
+            <div class="step-dots-mini">
+              <span class="step-dot completed"></span>
+              <span class="step-dot completed"></span>
+              <span class="step-dot completed"></span>
+              <span class="step-dot active"></span>
+            </div>
+          </div>
+
+          <div class="flow-scroll-body">
+            <!-- Selected Context Ribbon -->
+            <div class="selection-summary-ribbon">
+              <div class="ribbon-item">
+                <i data-lucide="calendar"></i>
+                <span id="timeScreenDateBadge">Thu, 15 Oct 2026</span>
+              </div>
+              <div class="ribbon-item">
+                <i data-lucide="user"></i>
+                <span id="timeScreenDentistBadge">Dr. Ananya Rao</span>
+              </div>
+            </div>
+
+            <!-- Legend for slots -->
+            <div class="slots-legend">
+              <span class="legend-item"><span class="legend-dot available"></span> Available</span>
+              <span class="legend-item"><span class="legend-dot selected"></span> Selected</span>
+              <span class="legend-item"><span class="legend-dot unavailable"></span> Booked</span>
+            </div>
+
+            <!-- Morning Slots -->
+            <div class="slot-section">
+              <div class="slot-period-header">
+                <i data-lucide="sun" class="period-icon morning-icon"></i>
+                <h3>Morning Slots</h3>
+                <span class="period-count" id="morningSlotCount">4 available</span>
+              </div>
+              <div class="slots-grid" id="morningSlotsGrid">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+
+            <!-- Afternoon Slots -->
+            <div class="slot-section">
+              <div class="slot-period-header">
+                <i data-lucide="cloud-sun" class="period-icon afternoon-icon"></i>
+                <h3>Afternoon Slots</h3>
+                <span class="period-count" id="afternoonSlotCount">3 available</span>
+              </div>
+              <div class="slots-grid" id="afternoonSlotsGrid">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+
+            <!-- Evening Slots -->
+            <div class="slot-section">
+              <div class="slot-period-header">
+                <i data-lucide="moon" class="period-icon evening-icon"></i>
+                <h3>Evening Slots</h3>
+                <span class="period-count" id="eveningSlotCount">4 available</span>
+              </div>
+              <div class="slots-grid" id="eveningSlotsGrid">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+
+            <!-- Zero Slot Edge State Simulation Trigger -->
+            <div class="slot-empty-toggle-bar">
+              <button class="text-btn-xs" onclick="simulateEmptySlotsToggle()">
+                <i data-lucide="sliders"></i> <span id="emptySlotToggleLabel">Simulate "No Slots Available" State</span>
+              </button>
+            </div>
+
+            <!-- Empty Slot State (Hidden by default) -->
+            <div id="noSlotsState" class="empty-state-card" style="display: none;">
+              <div class="empty-icon-wrap"><i data-lucide="calendar-x"></i></div>
+              <h3>No Time Slots Available</h3>
+              <p>All appointments are fully booked on this date. Please choose another date or request emergency assistance.</p>
+              <button class="btn btn-outline btn-block mt-sm" onclick="navigateTo('screen-date')">Choose Another Date</button>
+            </div>
+
+          </div>
+
+          <div class="flow-sticky-footer">
+            <div class="footer-summary-row">
+              <span>Selected Slot: <strong id="selectedTimeDisplay">10:30 AM</strong></span>
+              <span class="badge-status-green">30–45 min</span>
+            </div>
+            <button class="btn btn-primary btn-block btn-lg" id="btnTimeContinue" onclick="proceedToReviewStep()">
+              <span>Review Appointment</span>
+              <i data-lucide="arrow-right"></i>
+            </button>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SCREEN 10: APPOINTMENT REVIEW                   -->
+        <!-- ============================================== -->
+        <section id="screen-review" class="screen review-screen">
+          <div class="screen-sticky-header">
+            <button class="back-btn-circle" onclick="navigateTo('screen-time')" aria-label="Go Back">
+              <i data-lucide="chevron-left"></i>
+            </button>
+            <h1 class="screen-title">Review Your Appointment</h1>
+            <div class="header-spacer"></div>
+          </div>
+
+          <div class="flow-scroll-body">
+            <p class="flow-instruction">Please review the appointment details before confirming.</p>
+
+            <!-- Main Summary Ticket Card -->
+            <div class="review-ticket-card">
+              <div class="ticket-header">
+                <div class="clinic-badge-sm">
+                  <i data-lucide="shield-check"></i> Verified Dental Clinic
+                </div>
+                <h3>SmileCare Premier Dental</h3>
+                <p class="ticket-addr"><i data-lucide="map-pin"></i> #42, 100 Feet Road, Indiranagar, Bengaluru</p>
+              </div>
+
+              <div class="ticket-divider-dashed">
+                <div class="notch notch-left"></div>
+                <div class="notch notch-right"></div>
+              </div>
+
+              <!-- Editable Line Items -->
+              <div class="ticket-items">
+                
+                <!-- Service Item -->
+                <div class="ticket-item">
+                  <div class="item-left">
+                    <span class="item-label">Treatment / Service</span>
+                    <h4 id="reviewServiceName">Dental Cleaning & Polishing</h4>
+                    <span class="item-meta" id="reviewServiceDuration">Duration: ~45 mins</span>
+                  </div>
+                  <button class="edit-link-btn" onclick="navigateTo('screen-service')">Change</button>
+                </div>
+
+                <!-- Dentist Item -->
+                <div class="ticket-item">
+                  <div class="item-left">
+                    <span class="item-label">Dentist / Specialist</span>
+                    <h4 id="reviewDentistName">Dr. Ananya Rao</h4>
+                    <span class="item-meta" id="reviewDentistSpec">Senior Dentist (10+ Yrs Exp)</span>
+                  </div>
+                  <button class="edit-link-btn" onclick="navigateTo('screen-dentist')">Change</button>
+                </div>
+
+                <!-- Date Item -->
+                <div class="ticket-item">
+                  <div class="item-left">
+                    <span class="item-label">Appointment Date</span>
+                    <h4 id="reviewDate">Thursday, 15 October 2026</h4>
+                    <span class="item-meta">Standard Operating Day</span>
+                  </div>
+                  <button class="edit-link-btn" onclick="navigateTo('screen-date')">Change</button>
+                </div>
+
+                <!-- Time Item -->
+                <div class="ticket-item">
+                  <div class="item-left">
+                    <span class="item-label">Time Slot</span>
+                    <h4 id="reviewTime">10:30 AM</h4>
+                    <span class="item-meta">Report 10 mins prior to slot</span>
+                  </div>
+                  <button class="edit-link-btn" onclick="navigateTo('screen-time')">Change</button>
+                </div>
+              </div>
+
+              <!-- Patient Profile Details Attached -->
+              <div class="ticket-patient-box">
+                <div class="patient-row">
+                  <i data-lucide="user-check"></i>
+                  <div>
+                    <strong>Patient: Priya Sharma</strong>
+                    <span>+91 98765 43210 • Self</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Price & Payment Policy -->
+              <div class="ticket-pricing-box">
+                <div class="price-row">
+                  <span>Estimated Consultation/Service Fee</span>
+                  <strong id="reviewServicePrice">₹1,200</strong>
+                </div>
+                <div class="pay-note">
+                  <i data-lucide="info"></i> Pay at clinic via UPI / Card / Cash after your treatment.
+                </div>
+              </div>
+            </div>
+
+            <!-- Guarantee / Free Cancellation Notice -->
+            <div class="cancellation-policy-card">
+              <i data-lucide="refresh-cw" class="policy-icon"></i>
+              <div>
+                <strong>Flexible & Free Cancellation</strong>
+                <p>Reschedule or cancel with zero penalty up to 2 hours before your appointment.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-sticky-footer">
+            <button class="btn btn-primary btn-block btn-lg" id="btnConfirmBooking" onclick="confirmAppointment()">
+              <i data-lucide="check"></i>
+              <span>Confirm Appointment</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SCREEN 11: CONFIRMATION SUCCESS                -->
+        <!-- ============================================== -->
+        <section id="screen-confirmation" class="screen confirmation-screen">
+          <div class="conf-scroll-body">
+            
+            <div class="conf-hero">
+              <div class="conf-icon-circle animate-bounce-in">
+                <i data-lucide="check" class="conf-check"></i>
+                <div class="conf-glow"></div>
+              </div>
+              <h1 class="conf-title">Appointment Confirmed!</h1>
+              <p class="conf-sub">Your dental visit has been scheduled successfully. An SMS & email reminder has been sent.</p>
+              <div class="booking-ref-chip">
+                <span>Booking ID:</span>
+                <strong id="confBookingId">#SC-2026-9812</strong>
+              </div>
+            </div>
+
+            <!-- Confirmation Card Summary -->
+            <div class="conf-summary-card">
+              <div class="conf-clinic-bar">
+                <i data-lucide="hospital"></i>
+                <span>SmileCare Premier Dental Clinic</span>
+              </div>
+
+              <div class="conf-main-detail">
+                <h3 id="confService">Dental Cleaning & Polishing</h3>
+                <p class="doctor-badge" id="confDoctor"><i data-lucide="stethoscope"></i> Dr. Ananya Rao</p>
+              </div>
+
+              <div class="conf-datetime-grid">
+                <div class="dt-cell">
+                  <i data-lucide="calendar"></i>
+                  <div>
+                    <span class="dt-label">Date</span>
+                    <strong id="confDate">15 Oct 2026</strong>
+                  </div>
+                </div>
+                <div class="dt-cell">
+                  <i data-lucide="clock"></i>
+                  <div>
+                    <span class="dt-label">Time</span>
+                    <strong id="confTime">10:30 AM</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="conf-address-box">
+                <i data-lucide="map-pin"></i>
+                <span>#42, 100ft Road, Indiranagar, Bengaluru, 560038</span>
+              </div>
+            </div>
+
+            <!-- Secondary Actions -->
+            <div class="conf-actions-group">
+              <button class="btn btn-outline btn-block" onclick="addToCalendarAction()">
+                <i data-lucide="calendar-plus"></i>
+                <span>Add to Google Calendar / Apple iCal</span>
+              </button>
+              
+              <button class="btn btn-secondary btn-block" onclick="openAppointmentDetailsFromConfirmation()">
+                <i data-lucide="file-text"></i>
+                <span>View Appointment Details</span>
+              </button>
+            </div>
+
+          </div>
+
+          <div class="conf-sticky-footer">
+            <button class="btn btn-primary btn-block btn-lg" onclick="finishBookingToHome()">
+              <span>Done (Back to Home)</span>
+              <i data-lucide="home"></i>
+            </button>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SCREEN 12: MY APPOINTMENTS LIST                 -->
+        <!-- ============================================== -->
+        <section id="screen-appointments" class="screen appt-list-screen">
+          <div class="screen-sticky-header">
+            <h1 class="screen-title">My Appointments</h1>
+            <button class="icon-btn" onclick="startBookingFlow()" aria-label="Book New Appointment">
+              <i data-lucide="plus"></i>
+            </button>
+          </div>
+
+          <!-- Tabs: Upcoming | Past -->
+          <div class="tab-pill-container">
+            <button class="tab-pill active" id="tabUpcoming" onclick="switchApptTab('upcoming')">
+              Upcoming <span class="tab-count-badge" id="upcomingCountBadge">2</span>
+            </button>
+            <button class="tab-pill" id="tabPast" onclick="switchApptTab('past')">
+              Past Visits <span class="tab-count-badge" id="pastCountBadge">2</span>
+            </button>
+          </div>
+
+          <div class="flow-scroll-body">
+            <!-- Dynamic Appointments Container -->
+            <div id="appointmentsListContainer" class="appt-cards-feed">
+              <!-- Rendered via JS -->
+            </div>
+
+            <!-- Empty State for Appointments -->
+            <div id="emptyAppointmentsState" class="empty-state-card" style="display: none;">
+              <div class="empty-icon-wrap"><i data-lucide="calendar-off"></i></div>
+              <h3>No appointments yet</h3>
+              <p>You have no scheduled appointments in this tab. Keep your smile healthy with routine care!</p>
+              <button class="btn btn-primary mt-md" onclick="startBookingFlow()">
+                <i data-lucide="calendar-plus"></i> Book an Appointment
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SCREEN 13: APPOINTMENT DETAILS                  -->
+        <!-- ============================================== -->
+        <section id="screen-details" class="screen appt-details-screen">
+          <div class="screen-sticky-header">
+            <button class="back-btn-circle" onclick="navigateTo('screen-appointments')" aria-label="Go Back">
+              <i data-lucide="chevron-left"></i>
+            </button>
+            <h1 class="screen-title">Appointment Details</h1>
+            <div class="header-spacer"></div>
+          </div>
+
+          <div class="flow-scroll-body" id="appointmentDetailBody">
+            <!-- Dynamic Detail Content Populated by JS -->
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SCREEN 14: RESCHEDULE APPOINTMENT               -->
+        <!-- ============================================== -->
+        <section id="screen-reschedule" class="screen booking-flow-screen">
+          <div class="screen-sticky-header">
+            <button class="back-btn-circle" onclick="navigateTo('screen-details')" aria-label="Go Back">
+              <i data-lucide="chevron-left"></i>
+            </button>
+            <div class="header-flow-progress">
+              <span class="step-indicator">Modify Booking</span>
+              <h1 class="screen-title">Reschedule Appointment</h1>
+            </div>
+            <div class="header-spacer"></div>
+          </div>
+
+          <div class="flow-scroll-body">
+            <!-- Current Booking Notice -->
+            <div class="current-slot-pill">
+              <i data-lucide="info"></i>
+              <div>
+                <span>Current Slot:</span>
+                <strong id="rescheduleCurrentSlotText">15 Oct 2026 at 10:30 AM</strong>
+              </div>
+            </div>
+
+            <h3 class="section-subheading">1. Select New Date</h3>
+            <div class="horizontal-date-strip" id="rescheduleDateStrip">
+              <!-- Rendered via JS -->
+            </div>
+
+            <h3 class="section-subheading mt-md">2. Select New Time</h3>
+            <div class="slots-grid" id="rescheduleSlotsGrid">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <div class="flow-sticky-footer">
+            <div class="footer-summary-row">
+              <span>New: <strong id="rescheduleNewSlotText">17 Oct 2026, 02:00 PM</strong></span>
+              <span class="badge-status-green">No Fee</span>
+            </div>
+            <button class="btn btn-primary btn-block btn-lg" onclick="confirmReschedule()">
+              <i data-lucide="clock-rewind"></i>
+              <span>Confirm New Time</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SCREEN 15: NOTIFICATIONS                        -->
+        <!-- ============================================== -->
+        <section id="screen-notifications" class="screen notif-screen">
+          <div class="screen-sticky-header">
+            <h1 class="screen-title">Notifications</h1>
+            <button class="text-btn-sm" onclick="markAllNotificationsRead()">Mark all read</button>
+          </div>
+
+          <div class="flow-scroll-body">
+            <div class="notif-list" id="notificationsFeed">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SCREEN 16: PROFILE & SETTINGS                   -->
+        <!-- ============================================== -->
+        <section id="screen-profile" class="screen profile-screen">
+          <div class="screen-sticky-header">
+            <h1 class="screen-title">My Profile</h1>
+            <button class="icon-btn" onclick="showToast('Profile editing enabled', 'info')" aria-label="Edit Profile">
+              <i data-lucide="edit-3"></i>
+            </button>
+          </div>
+
+          <div class="flow-scroll-body">
+            <!-- Profile Card -->
+            <div class="profile-hero-card">
+              <div class="profile-avatar-box">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" alt="Priya Sharma" class="profile-lg-avatar">
+                <button class="avatar-edit-cam" onclick="showToast('Upload photo dialog', 'info')"><i data-lucide="camera"></i></button>
+              </div>
+              <h2 class="profile-user-name">Priya Sharma</h2>
+              <p class="profile-user-email">priya.sharma@gmail.com</p>
+              <div class="patient-id-tag">Patient ID: #SC-PT-9041</div>
+            </div>
+
+            <!-- Profile Menu Options -->
+            <div class="settings-menu-group">
+              <div class="menu-item" onclick="navigateTo('screen-appointments')">
+                <div class="menu-icon-box bg-blue"><i data-lucide="calendar"></i></div>
+                <div class="menu-text">
+                  <strong>My Appointments</strong>
+                  <span>View upcoming & past dental visits</span>
+                </div>
+                <i data-lucide="chevron-right" class="menu-arrow"></i>
+              </div>
+
+              <div class="menu-item" onclick="navigateTo('screen-notifications')">
+                <div class="menu-icon-box bg-teal"><i data-lucide="bell"></i></div>
+                <div class="menu-text">
+                  <strong>Notifications & Reminders</strong>
+                  <span>SMS, WhatsApp & In-app alerts</span>
+                </div>
+                <i data-lucide="chevron-right" class="menu-arrow"></i>
+              </div>
+
+              <div class="menu-item" onclick="openMedicalHistoryModal()">
+                <div class="menu-icon-box bg-purple"><i data-lucide="file-heart"></i></div>
+                <div class="menu-text">
+                  <strong>Dental Records & X-Rays</strong>
+                  <span>Prescriptions, X-ray uploads & reports</span>
+                </div>
+                <i data-lucide="chevron-right" class="menu-arrow"></i>
+              </div>
+
+              <div class="menu-item" onclick="showClinicModal()">
+                <div class="menu-icon-box bg-orange"><i data-lucide="map-pin"></i></div>
+                <div class="menu-text">
+                  <strong>Clinic Information & Hours</strong>
+                  <span>Indiranagar Branch, Directions & Emergency</span>
+                </div>
+                <i data-lucide="chevron-right" class="menu-arrow"></i>
+              </div>
+
+              <div class="menu-item" onclick="showHelpModal()">
+                <div class="menu-icon-box bg-teal"><i data-lucide="help-circle"></i></div>
+                <div class="menu-text">
+                  <strong>Help & Support</strong>
+                  <span>FAQs, direct WhatsApp clinic chat</span>
+                </div>
+                <i data-lucide="chevron-right" class="menu-arrow"></i>
+              </div>
+
+              <div class="menu-item" onclick="showPrivacyModal()">
+                <div class="menu-icon-box bg-gray"><i data-lucide="shield"></i></div>
+                <div class="menu-text">
+                  <strong>Privacy & Security</strong>
+                  <span>HIPAA & Patient data encryption</span>
+                </div>
+                <i data-lucide="chevron-right" class="menu-arrow"></i>
+              </div>
+            </div>
+
+            <!-- Logout Button -->
+            <button class="btn-logout-item" onclick="handleLogout()">
+              <i data-lucide="log-out"></i>
+              <span>Log Out</span>
+            </button>
+
+            <div class="app-version-stamp">
+              SmileCare Mobile App v2.4.0 (Build 2026.10)
+            </div>
+          </div>
+        </section>
+
+      </div> <!-- End Screen Container -->
+
+      <!-- ============================================== -->
+      <!-- SCREEN 9.1: PERSISTENT BOTTOM NAVIGATION BAR   -->
+      <!-- ============================================== -->
+      <nav class="mobile-bottom-nav" id="bottomNav" aria-label="Main Navigation">
+        <button class="nav-tab active" id="nav-home" onclick="navSwitch('screen-home', this)">
+          <div class="nav-icon-wrap"><i data-lucide="home"></i></div>
+          <span>Home</span>
+        </button>
+
+        <button class="nav-tab" id="nav-appointments" onclick="navSwitch('screen-appointments', this)">
+          <div class="nav-icon-wrap">
+            <i data-lucide="calendar"></i>
+            <span class="nav-badge" id="navApptBadge">1</span>
+          </div>
+          <span>Appointments</span>
+        </button>
+
+        <button class="nav-tab" id="nav-notifications" onclick="navSwitch('screen-notifications', this)">
+          <div class="nav-icon-wrap">
+            <i data-lucide="bell"></i>
+            <span class="nav-badge" id="navNotifBadge">2</span>
+          </div>
+          <span>Notifications</span>
+        </button>
+
+        <button class="nav-tab" id="nav-profile" onclick="navSwitch('screen-profile', this)">
+          <div class="nav-icon-wrap"><i data-lucide="user"></i></div>
+          <span>Profile</span>
+        </button>
+      </nav>
+
+      <!-- Cancel Confirmation Modal -->
+      <div class="app-modal-overlay" id="cancelModal">
+        <div class="app-modal-dialog">
+          <div class="modal-danger-icon"><i data-lucide="alert-triangle"></i></div>
+          <h3>Cancel Appointment?</h3>
+          <p>Are you sure you want to cancel your <strong id="cancelServiceTitle">Dental Cleaning</strong> on <strong id="cancelDateTime">15 Oct 2026</strong>?</p>
+          <div class="modal-btn-row">
+            <button class="btn btn-outline flex-1" onclick="closeCancelModal()">Keep Appointment</button>
+            <button class="btn btn-danger flex-1" onclick="executeCancelAppointment()">Yes, Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Clinic Information Modal -->
+      <div class="app-modal-overlay" id="clinicInfoModal">
+        <div class="app-modal-dialog modal-info-wide">
+          <button class="modal-close-x" onclick="closeClinicModal()"><i data-lucide="x"></i></button>
+          <div class="clinic-modal-hero">
+            <div class="clinic-avatar-brand"><i data-lucide="hospital"></i></div>
+            <h3>SmileCare Premier Dental Clinic</h3>
+            <span class="verified-badge"><i data-lucide="shield-check"></i> Real Business Case Study</span>
+          </div>
+          <div class="clinic-modal-content">
+            <div class="info-group">
+              <label>Location & Address</label>
+              <p>#42, 100 Feet Road, HAL 2nd Stage, Indiranagar, Bengaluru, Karnataka 560038</p>
+            </div>
+            <div class="info-group">
+              <label>Contact & Emergency Helpline</label>
+              <p>+91 (080) 4123-7890 • emergency@smilecaredental.in</p>
+            </div>
+            <div class="info-group">
+              <label>Operating Hours</label>
+              <p><strong>Mon – Sat:</strong> 09:00 AM – 08:00 PM<br><strong>Sunday:</strong> 10:00 AM – 02:00 PM (Emergency on call)</p>
+            </div>
+            <div class="info-group">
+              <label>Facilities Available</label>
+              <div class="facility-tags">
+                <span class="f-tag">Digital OPG X-Ray</span>
+                <span class="f-tag">Sterilization Autoclave Class B</span>
+                <span class="f-tag">Painless Anesthesia</span>
+                <span class="f-tag">Child-Friendly Operatory</span>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-block" onclick="getDirections()">
+            <i data-lucide="navigation"></i> Get Directions (Google Maps)
+          </button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Desktop UX Case Study & Documentation Modal -->
+  <div class="case-study-modal-overlay" id="caseStudyModal">
+    <div class="case-study-dialog">
+      <div class="case-study-header">
+        <div>
+          <h2>SmileCare — Mobile Appointment UX Case Study</h2>
+          <p>Complete Design Decisions, Problem Statement, Metrics & Technical Rationale</p>
+        </div>
+        <button class="modal-close-x" onclick="toggleCaseStudyModal()"><i data-lucide="x"></i></button>
+      </div>
+      <div class="case-study-body" id="caseStudyContent">
+        <!-- Content dynamically injected or loaded -->
+      </div>
+    </div>
+  </div>
+
+  <!-- App Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
